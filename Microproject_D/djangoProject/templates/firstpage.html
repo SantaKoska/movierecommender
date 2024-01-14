@@ -1,0 +1,205 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>MOVIERECOMMENDER</title>
+    <style>
+        .loc {
+            position: relative;
+            background-color: gold;
+            text-align: center;
+        }
+
+        .rdr {
+            background-color: transparent;
+            border-color: transparent;
+            padding-top: 10px;
+        }
+        .aka {
+            height: 700px;
+            width: 1500px;
+        }
+        .main {
+    position: relative;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 30px;
+    background-color: black;
+    padding-left: 20px;
+    border: 5px solid gold;
+    color: rgb(255, 255, 255);
+}
+.first {
+    position:relative;
+    text-align: left;
+    
+}
+.second {
+    position: relative;
+    padding-left: 20px ;
+    
+
+}
+.fourth {
+    position: relative;
+}
+.fifth {
+    position: relative;
+    text-align: left;
+    
+}
+.fifthsub {
+    position: relative;
+   
+}
+.sixth {
+    position: relative;
+    
+}
+.sixthsub {
+     padding-left: 9px;  
+     padding-bottom: 5px;   
+}
+.sixthsub2 {
+    padding-left: 40px;
+}
+.rtomt {
+    position: relative;
+    width: 120px;
+    height: 28px;
+    padding-left: 30px;
+  
+}
+.imdb {
+    position: relative;
+    width: 50px;
+    height: 30px;
+    padding-bottom: 7px;
+}
+
+.mimg {
+    position: relative;
+    width: 170px;
+}
+.mname {
+    position: relative;
+    font-size:170%;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight:bold;
+}
+.jkjk {
+    font-size: large;
+}
+.klkl {
+    position: relative;
+    bottom: 2px;
+}
+    </style>
+</head>
+<body style="background-color: black;">
+<img class="aka" src="{% static 'img/img1.png' %}">
+<div class="loc">
+    <form method="post" class="loc">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="rdr">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-filter-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16M3.5 5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1M5 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m2 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5"/>
+            </svg>
+            <h5>GENRE SORT</h5>
+        </button>
+    </form>
+</div>
+<br>
+
+{% if movies %}
+  <div style="color: white" class="movie-results">
+    <h3>Movie Results:</h3>
+    {% for movie in movies %}
+      <div class="main">
+        <br>
+        <h2 class="mname">{{ movie.Moviename }}</h2><hr>
+        <table>
+          <tr>
+            <th>
+              <div class="first">
+                <table>
+                  <tr>
+                    <th>
+                      <img class="mimg" src="{{ movie.Movieimage }}" alt="">
+                    </th>
+                  </tr>
+                </table>
+              </div>
+            </th>
+            <th>
+              <div class="second">
+                <table>
+                  <tr>
+                    <div class="Third">
+                      <th>
+                        <img class="imdb"src="{% static 'imdb-logo-transparent.png' %}" alt="">
+                      </th>
+                      <th>
+                        <h4 class="klkl">-{{ movie.IMDB }}</h4>
+                      </th>
+                    </div>
+                    <div class="fourth">
+                      <th>
+                       <img class="rtomt" src="{% static 'Rotten Tomatoes.png' %}" alt="">
+                      </th>
+                      <th>
+                        <h4 class="klkl">-{{ movie.Rottentomatoes }}%</h4>
+                      </th>
+                      <th>
+                        <h4 class="klkl">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ movie.date }}</h4>
+                      </th>
+                    </div>
+                  </tr>
+                </table>
+                <div class="fifth">
+                  <table>
+                    <tr>
+                      <th>
+                        <h3>DESCRIPTION:</h3>
+                      </th>
+                    </tr>
+                    <tr class="fifthsub">
+                      <th>
+                        <p class="jkjk">{{ movie.Description }}</p>
+                      </th>
+                    </tr>
+                  </table>
+                </div>
+                <div class="sixth">
+                  <table>
+                    <tr>
+                      <th>
+                        <h5>GENRE:</h5>
+                      </th>
+                      <th>
+                        <h3 class="sixthsub">{{ movie.Genre }}</h3>
+                      </th>
+                      <th>
+                        <h5 class="sixthsub2">DIRECTED BY:</h5>
+                      </th>
+                      <th>
+                        <h3 class="sixthsub">{{ movie.Director }}</h3>
+                      </th>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </table>
+      </div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+</body>
+</html>
